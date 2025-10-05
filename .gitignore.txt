@@ -1,7 +1,0 @@
-.vs/
-bin/
-obj/
-*.opendb
-*.VC.db
-*.user
-*.suo
