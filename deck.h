@@ -18,7 +18,7 @@ private:
 public:
 
 	// Constructor for the deck class
-	deck(*card);
+	deck();
 
 	// Function to shuffle the deck
 	void shuffle();

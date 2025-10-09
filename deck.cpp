@@ -7,10 +7,24 @@
 #include <iostream>
 using namespace std;
 
+// Constructor for the deck class
 deck::deck()
 {
-	int values[13] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13 };
-	string suits[4] = { "club", "diamond", "heart", "spade" };
+	string values[13] = { "ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
+	string suits[4] = { "clubs", "diamonds", "hearts", "spades" };
 
+} // end constructor
 
-}
+// Function to print the deck
+ostream& operator<<(ostream& os, const deck& resp)
+{
+	// Print the deck
+	os << "Deck contents: " << endl;
+	// Loop through the deck and print each card
+	while (resp.deckHead != nullptr)
+	{
+		os << *(resp.deckHead) << endl;
+		resp.deckHead = resp.deckHead->next;
+	} // end while loop
+	return os;
+} // end function
