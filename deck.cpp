@@ -18,13 +18,12 @@ deck::deck()
 // Function to print the deck
 ostream& operator<<(ostream& os, const deck& resp)
 {
-	// Print the deck
-	os << "Deck contents: " << endl;
-	// Loop through the deck and print each card
-	while (resp.deckHead != nullptr)
+	os << "Deck contents:\n";
+	auto* current = resp.deckHead;  // temp pointer
+	while (current != nullptr)
 	{
-		os << *(resp.deckHead) << endl;
-		resp.deckHead = resp.deckHead->next;
-	} // end while loop
+		os << *current << endl;  // relies on overloaded << for card
+		current = current->next;
+	}
 	return os;
 } // end function
