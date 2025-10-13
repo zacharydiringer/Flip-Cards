@@ -5,6 +5,7 @@
 // Import statements
 #include "deck.h"
 #include <iostream>
+#include "card.cpp"
 using namespace std;
 
 // Constructor for the deck class
@@ -27,3 +28,40 @@ ostream& operator<<(ostream& os, const deck& resp)
 	}
 	return os;
 } // end function
+
+void shuffle() {
+    Card cards[52]; //Array for card deck
+    Node* temp = front;
+    int total = 0;
+
+    while (temp != NULL) {
+        cards[total] = temp->card;
+        temp = temp->next;
+        total++;
+	} //End while loop
+
+    Card shuffled[52];
+    bool used[52] = { false }; //Keeps track of which cards were used
+    int count = 0;
+
+    while (count < total) {
+        int index = rand() % total; //Pick random position in the card deck
+
+        if (used[index] == false) {
+            shuffled[count] = cards[index]; //Copy card
+            used[index] = true;  //Mark it as used
+            count++;
+		} //End if statement
+	} //End while loop
+
+    temp = front;
+    int i = 0;
+    //Copy shuffled cards back into the list 
+    while (temp != NULL) {
+        temp->card = shuffled[i];
+        temp = temp->next;
+        i++;
+	} //End while loop
+
+    cout << "Deck has been shuffled.\n"; //End confirmation message
+} // End function
