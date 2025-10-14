@@ -4,7 +4,8 @@
 
 #pragma once
 // Import statements
-#include "card.cpp"
+#include "card.h"
+#include "d_node.h"
 #include <iostream>
 using namespace std;
 
@@ -13,7 +14,7 @@ class deck;
 class deck
 {
 private:
-	*card deckHead;
+	node<card>* deckHead;
 
 public:
 

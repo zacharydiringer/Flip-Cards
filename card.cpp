@@ -17,7 +17,7 @@ card::card(string suitInput, string valueInput)
 // Overloaded function to print the card
 ostream& operator<<(ostream& os, const card& resp)
 {
-	os << resp.value << " of " << resp.suit << "s";
+	os << resp.value << " of " << resp.suit;
 	return os;
 } // end overloaded function
 
