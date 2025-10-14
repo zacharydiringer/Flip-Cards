@@ -63,7 +63,7 @@ ostream& operator<<(ostream& os, const deck& resp)
 // Function to shuffle the deck
 void deck::shuffle()
 {
-	card* cards[52]; // Array of pointers to cards (like your partner's approach)
+	card* cards[52]; // Array of pointers to cards
 	node<card>* temp = deckHead;
 	int total = 0;
 
@@ -103,5 +103,5 @@ void deck::shuffle()
 		delete cards[j];
 	}
 
-	cout << "Deck has been shuffled.\n"; // End confirmation message
+	cout << "Deck has successfully been shuffled.\n"; // End confirmation message
 } // end shuffle
