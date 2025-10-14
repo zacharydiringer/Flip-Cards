@@ -4,11 +4,11 @@
 
 // Import statements
 #include "deck.h"
-#include "d_node.h"
+#include "d_node.h" // linked list node template class
 #include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <ctime>
+#include <vector> // for vector data structure
+#include <cstdlib> // for random number generation
+#include <ctime> // for seeding random number generator
 using namespace std;
 
 // Constructor for the deck class
@@ -69,7 +69,7 @@ void deck::shuffle()
 
 	// Extract cards from linked list to array
 	while (temp != nullptr) {
-		cards[total] = new card(temp->nodeValue.getValue(), temp->nodeValue.getSuit());
+		cards[total] = new card(temp->nodeValue.getSuit(), temp->nodeValue.getValue());
 		temp = temp->next;
 		total++;
 	}
