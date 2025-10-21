@@ -24,6 +24,12 @@ public:
 	// Function to shuffle the deck
 	void shuffle();
 
+	// Function to deal card
+	node<card>* deal();
+
+	// Function to replace card
+	void replace(node<card>* cardNode);
+
 	// Overloaded function to print the deck
 	friend ostream& operator<<(ostream& os, const deck& resp);
 
