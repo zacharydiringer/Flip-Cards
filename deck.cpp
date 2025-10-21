@@ -2,66 +2,93 @@
 // Kyle Murrah, Rachel Barume, Zachary Diringer
 // Initialization of the deck class
 
-// Import statements
 #include "deck.h"
+#include "d_node.h" // linked list node template class
 #include <iostream>
-#include "card.cpp"
+#include <vector>    // for vector data structure
+#include <cstdlib>   // for random number generation
+#include <ctime>     // for seeding random number generator
 using namespace std;
 
 // Constructor for the deck class
 deck::deck()
 {
-	string values[13] = { "ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king"};
-	string suits[4] = { "clubs", "diamonds", "hearts", "spades" };
-
-} // end constructor
+    string values[13] = { "ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "jack", "queen", "king" };
+    string suits[4] = { "clubs", "diamonds", "hearts", "spades" };
+    
+    deckHead = nullptr;
+    node<card>* tail = nullptr;
+    
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 13; j++) {
+            card newCard(suits[i], values[j]);
+            node<card>* newNode = new node<card>(newCard, nullptr);
+            
+            if (deckHead == nullptr) {
+                deckHead = newNode;
+                tail = newNode;
+            } else {
+                tail->next = newNode;
+                tail = newNode;
+            }
+        }
+    }
+}
 
 // Function to print the deck
 ostream& operator<<(ostream& os, const deck& resp)
 {
-	os << "Deck contents:\n";
-	auto* current = resp.deckHead;  // temp pointer
-	while (current != nullptr)
-	{
-		os << *current << endl;  // relies on overloaded << for card
-		current = current->next;
-	}
-	return os;
-} // end function
+    os << "Deck contents:\n";
+    auto* current = resp.deckHead;
+    while (current != nullptr) {
+        os << current->nodeValue << endl;
+        current = current->next;
+    }
+    return os;
+}
 
-void shuffle() {
-    Card cards[52]; //Array for card deck
-    Node* temp = front;
+// Function to shuffle the deck
+void deck::shuffle()
+{
+    srand(time(nullptr)); // seed random generator once
+
+    card* cards[52];
+    node<card>* temp = deckHead;
     int total = 0;
 
-    while (temp != NULL) {
-        cards[total] = temp->card;
+    // Extract cards to array
+    while (temp != nullptr) {
+        cards[total] = new card(temp->nodeValue.getSuit(), temp->nodeValue.getValue());
         temp = temp->next;
         total++;
-	} //End while loop
+    }
 
-    Card shuffled[52];
-    bool used[52] = { false }; //Keeps track of which cards were used
+    card* shuffled[52];
+    bool used[52] = { false };
     int count = 0;
 
     while (count < total) {
-        int index = rand() % total; //Pick random position in the card deck
-
-        if (used[index] == false) {
-            shuffled[count] = cards[index]; //Copy card
-            used[index] = true;  //Mark it as used
+        int index = rand() % total;
+        if (!used[index]) {
+            shuffled[count] = cards[index];
+            used[index] = true;
             count++;
-		} //End if statement
-	} //End while loop
+        }
+    }
 
-    temp = front;
+    // Copy shuffled cards back to linked list
+    temp = deckHead;
     int i = 0;
-    //Copy shuffled cards back into the list 
-    while (temp != NULL) {
-        temp->card = shuffled[i];
+    while (temp != nullptr) {
+        temp->nodeValue = *shuffled[i];
         temp = temp->next;
         i++;
-	} //End while loop
+    }
 
-    cout << "Deck has been shuffled.\n"; //End confirmation message
-} // End function
+    // Clean up memory
+    for (int j = 0; j < total; j++) {
+        delete cards[j];
+    }
+
+    cout << "Deck has successfully been shuffled.\n";
+}
