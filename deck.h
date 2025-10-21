@@ -25,7 +25,7 @@ public:
 	void shuffle();
 
 	// Function to deal card
-	node<card>* deal();
+	card deal();
 
 	// Function to replace card
 	void replace(node<card>* cardNode);
@@ -33,5 +33,7 @@ public:
 	// Overloaded function to print the deck
 	friend ostream& operator<<(ostream& os, const deck& resp);
 
+	// Function to get the head of the deck
+	node<card>* getDeckHead();
 
 }; // end class deck
