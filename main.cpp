@@ -4,8 +4,7 @@
 
 // Import statements
 #include "deck.h"
-#include "deck.cpp"
-#include "card.cpp"
+#include "card.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>

@@ -18,6 +18,12 @@ private:
 public:
 	// Constructor for the card class
 	card(string suitInput, string valueInput);
+	
+	// Copy constructor
+	card(const card& other);
+	
+	// Overloaded assignment operator
+	card& operator=(const card& other);
 
 	// Overloaded function to print the card
 	friend ostream& operator<<(ostream& os, const card& resp);
