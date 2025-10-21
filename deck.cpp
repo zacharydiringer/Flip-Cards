@@ -92,3 +92,68 @@ void deck::shuffle()
 
     cout << "Deck has successfully been shuffled.\n";
 }
+
+//Deal function to return top card from deck and then remove it from the deck
+
+node<card>* deck::deal()
+
+{
+
+    if (deckHead == nullptr)
+
+    {
+
+        cout << "The deck is empty, can't complete deal.\n";
+
+        return nullptr;
+
+    }
+
+    node<card>* dealtCard = deckHead; //Store the top card
+
+    deckHead = deckHead->next; //Set top card to be the next card
+
+    dealtCard->next = nullptr; //Remove the top card from the original deck
+
+    return dealtCard; //Return top card
+
+} //end deal
+
+//Replace function that adds a card at the back of the deck
+
+void deck::replace(node<card>* cardNode)
+
+{
+
+    if (cardNode == nullptr)
+
+    {
+
+        return; //Do nothing if new card is null
+
+    }
+
+    if (deckHead == nullptr) //If deck is empty, replaced card becomes head
+
+    {
+
+        deckHead = cardNode;
+
+        return;
+
+    }
+
+    node<card>* temp = deckHead;
+
+    while (temp->next != nullptr) //Move to last spot in the deck
+
+    {
+
+        temp = temp->next;
+
+    }
+
+    temp->next = cardNode; //Add replace card at the end
+
+} //end replace
+
