@@ -1,108 +1,105 @@
-//main.cpp file for the Flip Card Project
-//Kyle Murrah, Rachel Barume, Zachary Diringer
-//Main file to test the deck class
+// main.cpp — Flip Card Project
+// Authors: Kyle Murrah, Rachel Barume, Zachary Diringer
+// Description: Main file to test the Deck class and run the Flip Card game.
 
-// Import statements
 #include "deck.h"
 #include "card.h"
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
 using namespace std;
 
 // Function to play the Flip Card game
 void playFlip() {
-    // Game logic would go here
-	cout << "Starting Flip Card game..." << endl;
-    // Create a new deck (constructor will create 52 cards in order)
+    cout << "Starting Flip Card game..." << endl;
+
+    // Create and display a new deck
     cout << "Creating a new deck..." << endl;
     deck gameDeck;
-    // Print the deck before shuffle
+
     cout << "\n--- Deck BEFORE shuffle ---" << endl;
     cout << gameDeck << endl;
 
-    // Seed the random number generator for shuffle
-    srand(time(0));
-    // Shuffle the deck
+    // Seed RNG and shuffle multiple times
+    srand(static_cast<unsigned int>(time(0)));
     cout << "\n--- Shuffling deck ---" << endl;
     gameDeck.shuffle();
     gameDeck.shuffle();
-	gameDeck.shuffle();
+    gameDeck.shuffle();
 
-    // Print the deck after shuffle
-    cout << "\n--- Deck AFTER shuffle ---" << endl;
-    cout << gameDeck << endl;
+    // Print the top 24 cards after shuffle
+    cout << "\n--- Top 24 cards AFTER shuffle ---" << endl;
+    node<card>* tempCard = gameDeck.getDeckHead();
+    for (int i = 0; i < 24 && tempCard != nullptr; ++i) {
+        cout << tempCard->nodeValue << endl;
+        tempCard = tempCard->next;
+    }
 
-
-	// Variable to continue or end the game
-	bool continueGame = true;
-    
-	// Keep track of the number of cards flipped
-	int cardsFlipped = 0;
-    
-	// Keep track of the player's score
+    // Initialize game variables
+    bool continueGame = true;
+    int cardsFlipped = 0;
     double points = 0;
-    double pointGain = 0
+    double pointGain = 0;
+
     // Game loop
-    while (continueGame == true and cardsFlipped <= 24) {
-		// Flip the top card of the deck and display it
+    while (continueGame && cardsFlipped < 24) {
+        // Deal and display the top card
         card topCard = gameDeck.deal();
-		cout << "Flipped card: " << topCard << endl;
+        cout << "\nFlipped card: " << topCard << endl;
 
-		// Determine points based on the card value
-        if (topCard.value == "ace") {
-            points += 10;
-			pointGain = 10;
-		} // end if
+        // Reset point gain for this round
+        pointGain = 0;
 
-        else if (topCard.value == "king" or topCard.value == "queen" or topCard.value == "jack") {
-			points += 5;
+        // Determine point change based on card value
+        string value = topCard.getValue();
+        if (value == "ace") {
+            pointGain = 10;
+        } else if (value == "king" || value == "queen" || value == "jack") {
             pointGain = 5;
-		} // end else if
-
-		else if (topCard.value == "10" or topCard.value == "9" or topCard.value == "8") {
+        } else if (value == "10" || value == "9" || value == "8") {
             pointGain = 0;
-		} // end else if
-
-        else if (topCard.value == "7"){
+        } else if (value == "7") {
             pointGain = -0.5 * points;
-			points = points / 2;
-		} // end else if
-
-        else if (topCard.value == "6" or topCard.value == "5" or topCard.value == "4"
-            or topCard.value == "3" or topCard.value == "2") {
+            points /= 2;
+        } else if (value == "6" || value == "5" || value == "4" ||
+                   value == "3" || value == "2") {
             pointGain = -1 * points;
             points = 0;
-        } // end else if
+        }
 
-        if (topCard.suit == "hearts") {
-            points += 1;
+        // Add bonus for hearts
+        if (topCard.getSuit() == "hearts") {
             pointGain += 1;
         }
 
-		// Display points gained or lost
-		cout << "Points gained/lost this flip: " << pointGain << ", Total points: " << points << endl;
+        // Update total points (except when already reset above)
+        if (value != "7" && value != "6" && value != "5" &&
+            value != "4" && value != "3" && value != "2") {
+            points += pointGain;
+        }
 
-		// Ask the player if they want to continue
-		cout << "Do you want to flip another card? (y/n): ";
-		char playerChoice;
-		cin >> playerChoice;
-        if (playerChoice == 'n' or playerChoice == 'N') {
+        // Display score update
+        cout << "Points gained/lost this flip: " << pointGain
+             << ", Total points: " << points << endl;
+
+        // Ask the player if they want to continue
+        cout << "Do you want to flip another card? (y/n): ";
+        char playerChoice;
+        cin >> playerChoice;
+        if (playerChoice == 'n' || playerChoice == 'N') {
             continueGame = false;
-		} // end if
+        }
 
-		// Increment the number of cards flipped
-		cardsFlipped++;
-	} // end while
-	
-    // Print results
-	cout << "\nGame over! You flipped " << cardsFlipped << " cards and scored " << points << " points." << endl;
+        ++cardsFlipped;
+    }
 
-} // end playFlip
+    // End of game summary
+    cout << "\nGame over! You flipped " << cardsFlipped
+         << " cards and scored " << points << " points." << endl;
+}
 
-// Main function to test deck initialization and shuffle
-int main()
-{
-	playFlip();
+int main() {
+    playFlip();
     return 0;
 }
