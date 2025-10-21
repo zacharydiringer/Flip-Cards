@@ -20,6 +20,9 @@ public:
 
 	// Constructor for the deck class
 	deck();
+	
+	// Destructor for the deck class
+	~deck();
 
 	// Function to shuffle the deck
 	void shuffle();

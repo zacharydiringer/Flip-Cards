@@ -35,6 +35,19 @@ deck::deck()
     }
 }
 
+// Destructor for the deck class
+deck::~deck()
+{
+	node<card>* current = deckHead;
+	while (current != nullptr)
+	{
+		node<card>* next = current->next;
+		delete current;
+		current = next;
+	}
+	deckHead = nullptr;
+} // end destructor
+
 // Function to print the deck
 ostream& operator<<(ostream& os, const deck& resp)
 {

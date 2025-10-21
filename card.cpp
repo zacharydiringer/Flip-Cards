@@ -14,6 +14,24 @@ card::card(string suitInput, string valueInput)
 	value = valueInput;
 } // end constructor
 
+// the copy constructor
+card::card(const card& other)
+{
+	suit = other.suit;
+	value = other.value;
+} // end of the copy constructor
+
+// Overloaded assignment operator
+card& card::operator=(const card& other)
+{
+	if (this != &other) // Check for assignments to itself
+	{
+		suit = other.suit;
+		value = other.value;
+	}
+	return *this;
+} // end of the assignment operator
+
 // Overloaded function to print the card
 ostream& operator<<(ostream& os, const card& resp)
 {
