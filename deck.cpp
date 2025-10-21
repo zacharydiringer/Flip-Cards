@@ -48,6 +48,11 @@ ostream& operator<<(ostream& os, const deck& resp)
 }
 
 // Function to shuffle the deck
+
+node<card>* deck::getDeckHead(){
+    return deckHead;
+} //end getDeckHead
+
 void deck::shuffle()
 {
     srand(time(nullptr)); // seed random generator once
@@ -95,10 +100,10 @@ void deck::shuffle()
 
 //Deal function to return top card from deck and then remove it from the deck
 
-node<card>* deck::deal()
+card deck::deal()
 
 {
-
+    /*
     if (deckHead == nullptr)
 
     {
@@ -108,14 +113,14 @@ node<card>* deck::deal()
         return nullptr;
 
     }
-
+    */
     node<card>* dealtCard = deckHead; //Store the top card
 
     deckHead = deckHead->next; //Set top card to be the next card
 
     dealtCard->next = nullptr; //Remove the top card from the original deck
 
-    return dealtCard; //Return top card
+    return dealtCard->nodeValue; //Return top card
 
 } //end deal
 
